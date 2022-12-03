@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -117,4 +118,23 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any
 	}
 
 	return nil
+}
+
+// getStrEnv reads from the environment variables & returns as string
+func getStrEnv(key string) string {
+	val := os.Getenv(key)
+	if val == "" {
+		panic("error reading environment variable")
+	}
+	return val
+}
+
+// getIntEnv converts env to int
+func getIntEnv(key string) int {
+	val := getStrEnv(key)
+	env, err := strconv.Atoi(val)
+	if err != nil {
+		panic("error converting environment variable")
+	}
+	return env
 }
