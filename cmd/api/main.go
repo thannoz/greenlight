@@ -10,7 +10,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
@@ -35,13 +34,8 @@ type application struct {
 func main() {
 	var cfg config
 
-	envErr := godotenv.Load(".env")
-	if envErr != nil {
-		log.Fatalf("error loading .env file")
-	}
-
 	flag.IntVar(&cfg.port, "port", getIntEnv("PORT"), "API server port")
-	flag.StringVar(&cfg.db.dsn, "dsn", os.Getenv("DSN"), "PostgreSQL DSN")
+	flag.StringVar(&cfg.db.dsn, "dsn", getStrEnv("DSN"), "PostgreSQL DSN")
 	flag.StringVar(&cfg.env, "env", "development", "Environment (development|staging|production)")
 	flag.Parse()
 

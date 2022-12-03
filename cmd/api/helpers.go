@@ -5,11 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 
+	"github.com/joho/godotenv"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -122,6 +124,10 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any
 
 // getStrEnv reads from the environment variables & returns as string
 func getStrEnv(key string) string {
+	envErr := godotenv.Load(".env")
+	if envErr != nil {
+		log.Fatalf("error loading .env file")
+	}
 	val := os.Getenv(key)
 	if val == "" {
 		panic("error reading environment variable")
