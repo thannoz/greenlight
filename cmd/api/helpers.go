@@ -122,7 +122,7 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any
 	return nil
 }
 
-// getStrEnv reads from the environment variables & returns as string
+// getStrEnv reads from the environment variables & returns it as string
 func getStrEnv(key string) string {
 	envErr := godotenv.Load(".env")
 	if envErr != nil {
@@ -135,7 +135,7 @@ func getStrEnv(key string) string {
 	return val
 }
 
-// getIntEnv converts env to int
+// getIntEnv converts environment variable to int
 func getIntEnv(key string) int {
 	val := getStrEnv(key)
 	env, err := strconv.Atoi(val)
